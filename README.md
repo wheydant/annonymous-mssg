@@ -19,15 +19,15 @@ Anonymous Feedback is a web application built with Next.js and TypeScript that a
 
 - **User Management**: Users can sign up, sign in, and receive messages.
 - **Anonymous Feedback**: Users can receive anonymous feedback, which is stored in their account.
-- **Schema Validation**: Zod is used for validating various schemas such as sign up, sign in, and message handling.
+- **Schema Validation**: Zod is used for validating various schemas such as sign up, sign in, and message handling with various [regexr](https://regexr.com/).
 - **Random Feedback Suggestions** (coming soon): The app will integrate with ChatGPT to generate feedback suggestions.
 
 ## Tech Stack
 
-- **Next.js**: React-based framework for server-side rendering and routing.
-- **TypeScript**: Type safety and modern JavaScript features.
-- **Mongoose**: MongoDB object modeling for Node.js.
-- **Zod**: TypeScript-first schema validation.
+- [**Next.js**](https://nextjs.org/): React-based framework for server-side rendering and routing.
+- [**TypeScript**](https://www.typescriptlang.org/): Type safety and modern JavaScript features.
+- [**Mongoose**](https://www.npmjs.com/package/mongoose): MongoDB object modeling for Node.js.
+- [**Zod**](https://www.npmjs.com/package/zod): TypeScript-first schema validation.
 - **ChatGPT API** (planned): Will be used for generating random feedback suggestions.
 
 ## Installation
@@ -74,4 +74,5 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is for personal use only. You may modify or distribute the code for personal projects, but it is not to be used for commercial purposes without explicit permission from the author.
+

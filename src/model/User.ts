@@ -72,7 +72,7 @@ const UserSchema: Schema<User> = new Schema({
     messages: [MessageSchema]
 })
 
-//Next JS runs on edge boot up using dedicated backend like express or flask it runs 1 time and whole backend is set but this doesnt apply to next JS so we have to check that if models are present or this is 1st time initialization.
+//Next JS runs on edge time framework, using dedicated backend like express or flask it runs 1 time and whole backend is set but this doesnt apply to next JS so we have to check that if models are present or this is 1st time initialization.
 
 //const UserModel = pre-existing thus models or new thus model
 
