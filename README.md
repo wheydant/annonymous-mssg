@@ -7,18 +7,21 @@ Anonymous Feedback is a platform that allows users to provide honest, anonymous 
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Theory](#theory)
+    - [Model and Schema Handling](#model-and-schema-handling)
+    - [Email Handling](#email-handling)
 - [Installation](#installation)<!-- - [Usage](#usage) -->
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Project Overview
 
-Anonymous Feedback is a web application built with Next.js and TypeScript that allows users to send and receive feedback anonymously. The project leverages Mongoose for data modeling and Zod for schema validation. In the future, the app will integrate with the ChatGPT API to suggest random feedback for users.
+Anonymous Feedback is a web application built with Next.js and TypeScript that allows users to send and receive feedback anonymously. The project leverages Mongoose for data modeling, Zod for schema validation, and Resend as an email service provider.
 
 ## Features
 
 - **User Management**: Users can sign up, sign in, and receive messages.
-- **Anonymous Feedback**: Users can receive anonymous feedback, which is stored in their account.
+- **Email Handling**: Sends verification emails upon user sign-up.
 - **Schema Validation**: Zod is used for validating various schemas such as sign up, sign in, and message handling with various [regexr](https://regexr.com/).
 - **Random Feedback Suggestions** (coming soon): The app will integrate with ChatGPT to generate feedback suggestions.
 
@@ -28,7 +31,40 @@ Anonymous Feedback is a web application built with Next.js and TypeScript that a
 - [**TypeScript**](https://www.typescriptlang.org/): Type safety and modern JavaScript features.
 - [**Mongoose**](https://www.npmjs.com/package/mongoose): MongoDB object modeling for Node.js.
 - [**Zod**](https://www.npmjs.com/package/zod): TypeScript-first schema validation.
+- [**Resend**](https://resend.com/docs/introduction): Email service provider for sending verification emails powered by [react-email](https://react.email/docs/introduction).
 - **ChatGPT API** (planned): Will be used for generating random feedback suggestions.
+
+## Theory
+### <ins>Model and Schema Handling</ins>
+
+1. **User and Message Models**: 
+   - Created Mongoose models for `User` and `Message`. The `User` model contains fields such as `username`, `email`, and `password`, along with an array of messages received by the user.
+   - Implemented email validation using a regular expression (regex) within the Mongoose schema to ensure valid email addresses.
+
+2. **Zod Frontend Schema Validation**:
+   - Created frontend validation schemas using Zod for various user-related actions, including:
+     - **Sign-Up**: Validates user registration data (username, email, password, etc.).
+     - **Sign-In**: Ensures valid credentials during login.
+     - **Message Handling**: Validates message contents and structures before sending or receiving.
+     - **Verification**: Checks the validity of verification codes and other related data.
+   - These schema checks ensure robust data validation on the client side before submitting any requests to the server, enhancing overall security and reducing potential errors.
+
+### <ins>Email Handling</ins>
+
+The email verification process is handled with the following steps:
+
+1. **Email Template**: Created an email template using `react-email` components in `emails/VerificationEmail.tsx`. The template uses `.tsx` for React-based HTML rendering.
+   
+2. **Resend Connection**: Created a `resend.ts` file in the `lib` folder to connect to the Resend email service provider.
+
+3. **API Response Types**: Defined types for API responses to ensure proper structure and consistency.
+
+4. **Helper File**: Added a helper file (`helpers/sendVerificationEmail.ts`) to send verification emails. This integrates:
+   - The email template (1)
+   - Resend connection (2)
+   - API response structure (3)
+
+5. **API Route**: Implemented the `/sign-up` API endpoint (`src/app/api/sign-up/route.ts`) that uses the helper file to handle user sign-up and email verification.
 
 ## Installation
 
