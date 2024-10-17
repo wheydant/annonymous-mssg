@@ -10,6 +10,7 @@ Anonymous Feedback is a platform that allows users to provide honest, anonymous 
 - [Theory](#theory)
     - [Model and Schema Handling](#model-and-schema-handling)
     - [Email Handling](#email-handling)
+    - [Sign-in Page Using auth.js](#create-sign-in-page-using-nextauth)
 - [Installation](#installation)<!-- - [Usage](#usage) -->
 - [Contributing](#contributing)
 - [License](#license)
@@ -32,6 +33,7 @@ Anonymous Feedback is a web application built with Next.js and TypeScript that a
 - [**Mongoose**](https://www.npmjs.com/package/mongoose): MongoDB object modeling for Node.js.
 - [**Zod**](https://www.npmjs.com/package/zod): TypeScript-first schema validation.
 - [**Resend**](https://resend.com/docs/introduction): Email service provider for sending verification emails powered by [react-email](https://react.email/docs/introduction).
+- [**NextAuth.js**](https://next-auth.js.org/): Authentication for Next.js applications, using JWT for session management and providing various authentication strategies.
 - **ChatGPT API** (planned): Will be used for generating random feedback suggestions.
 
 ## Theory
@@ -65,6 +67,36 @@ The email verification process is handled with the following steps:
    - API response structure (3)
 
 5. **API Route**: Implemented the `/sign-up` API endpoint (`src/app/api/sign-up/route.ts`) that uses the helper file to handle user sign-up and email verification.
+
+### Create Sign-In Page using NextAuth
+
+1. **API Setup for NextAuth**:
+   - Created API files for NextAuth in `app/api/auth/[...nextauth]/options.ts` (optional) and `route.ts`.
+
+2. **NextAuth Documentation**:
+   - Referring to the NextAuth documentation for:
+     - Providers (e.g., Google, GitHub)
+     - Configuration for Pages and Callbacks
+
+3. **NextAuthOptions Setup**:
+   - In `options.ts`, configured:
+     - **Providers**: Added credential-based authentication (email and password) with a custom `authorize` function.
+     - **Pages**: Changed the default `/auth/sign-in` to `/sign-in`.
+     - **Session**: Configured session strategy using JWT (JSON Web Tokens).
+     - **Callbacks**: Modified tokens and sessions to include more user details and avoid redundant database queries.
+
+4. **NextAuth Module Customization**:
+   - Created `src/types/next-auth.d.ts` to extend the `User`, `Session`, and `JWT` interfaces, adding more fields for custom session management.
+
+5. **Middleware**:
+   - Created `src/middleware.ts` to manage the entire NextAuth flow, which includes:
+     - **Config**: Specifies paths where the middleware should apply.
+     - **Middleware**: Contains the logic for redirecting and managing authentication flows.
+
+6. **Front-End for Sign-In**:
+   - Developed the front-end for the sign-in page in `src/app/sign-in/page.tsx` using the `[auth]` bundle format to prevent routing to `/auth/sign-in`.
+   - Added `'use client'` directive at the top of the client-side page for proper functionality.
+   - Created `context/AuthProvider.tsx` to wrap the page with `<SessionProvider>`, and finally wrapped the layout in `src/app/layout.tsx`.
 
 ## Installation
 
