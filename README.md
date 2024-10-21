@@ -11,6 +11,8 @@ Anonymous Feedback is a platform that allows users to provide honest, anonymous 
     - [Model and Schema Handling](#model-and-schema-handling)
     - [Email Handling](#email-handling)
     - [Sign-in Page Using auth.js](#create-sign-in-page-using-nextauth)
+    - [Backend](#backend)
+    - [AI Integration](#ai-integration)
 - [Installation](#installation)<!-- - [Usage](#usage) -->
 - [Contributing](#contributing)
 - [License](#license)
@@ -34,7 +36,7 @@ Anonymous Feedback is a web application built with Next.js and TypeScript that a
 - [**Zod**](https://www.npmjs.com/package/zod): TypeScript-first schema validation.
 - [**Resend**](https://resend.com/docs/introduction): Email service provider for sending verification emails powered by [react-email](https://react.email/docs/introduction).
 - [**NextAuth.js**](https://next-auth.js.org/): Authentication for Next.js applications, using JWT for session management and providing various authentication strategies.
-- **ChatGPT API** (planned): Will be used for generating random feedback suggestions.
+- [**ChatGPT API**](#ai-integration) : Random feedback suggestions.
 
 ## Theory
 ### <ins>Model and Schema Handling</ins>
@@ -68,7 +70,7 @@ The email verification process is handled with the following steps:
 
 5. **API Route**: Implemented the `/sign-up` API endpoint (`src/app/api/sign-up/route.ts`) that uses the helper file to handle user sign-up and email verification.
 
-### Create Sign-In Page using NextAuth
+### <ins>Create Sign-In Page using NextAuth</ins>
 
 1. **API Setup for NextAuth**:
    - Created API files for NextAuth in `app/api/auth/[...nextauth]/options.ts` (optional) and `route.ts`.
@@ -97,6 +99,28 @@ The email verification process is handled with the following steps:
    - Developed the front-end for the sign-in page in `src/app/sign-in/page.tsx` using the `[auth]` bundle format to prevent routing to `/auth/sign-in`.
    - Added `'use client'` directive at the top of the client-side page for proper functionality.
    - Created `context/AuthProvider.tsx` to wrap the page with `<SessionProvider>`, and finally wrapped the layout in `src/app/layout.tsx`.
+
+### <ins>Backend</ins>
+1. **Backend Routes:** Implemented routes for: [*Check-Unique* 
+     , *Verify-Code*
+     , *Accept-Messages*
+     , *Get-Messages*
+     , *Send-Messages*
+     , *Suggest-Messages*]
+
+2. **Key Learnings:**
+   - **Get-Messages > route.ts:**
+     - Used session data with extra values for more efficient handling.
+     - Mongoose aggregation pipeline requires casting `user_id` to `mongoose.Types.ObjectId()` when working with session-stored user IDs.
+     - Referenced Mongoose aggregation pipeline documentation.
+   
+### <ins>AI Integration</ins>
+**Suggest-Messages > route.ts:**
+   - Integrated [Vercel](https://sdk.vercel.ai/) libraries (`openai`, `ai`).
+   - Specified the runtime as `edge` for Next.js apps, which is mandatory for serverless functions.
+   - OpenAI paid API keys simplify AI integrations, but we're using [OpenRouter](https://openrouter.ai/docs/quick-start) to avoid costs useful document [Implementing a Free LLM AI Using OpenRouter.ai: A Step-by-Step Guide](https://medium.com/@mahesh.paul.j/implementing-a-free-llm-ai-using-openrouter-ai-a-step-by-step-guide-8990d3e5cf77) .
+   - Some useful methods like `OpenAIStream` and `StreamingTextResponse` are deprecated, making it harder to handle streaming responses.
+   - Added a solution using the `fetch` command to handle streaming responses in `suggest-chatGPT > route.ts`. Testing will determine which approach works best.  
 
 ## Installation
 
