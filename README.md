@@ -13,6 +13,12 @@ Anonymous Feedback is a platform that allows users to provide honest, anonymous 
     - [Sign-in Page Using auth.js](#create-sign-in-page-using-nextauth)
     - [Backend](#backend)
     - [AI Integration](#ai-integration)
+    - <details>
+         <summary><a href="#ui-using-shadcn">UI</a></summary>
+
+         - [Sign Up](#sign-up)
+
+      </details>
 - [Installation](#installation)<!-- - [Usage](#usage) -->
 - [Contributing](#contributing)
 - [License](#license)
@@ -36,7 +42,9 @@ Anonymous Feedback is a web application built with Next.js and TypeScript that a
 - [**Zod**](https://www.npmjs.com/package/zod): TypeScript-first schema validation.
 - [**Resend**](https://resend.com/docs/introduction): Email service provider for sending verification emails powered by [react-email](https://react.email/docs/introduction).
 - [**NextAuth.js**](https://next-auth.js.org/): Authentication for Next.js applications, using JWT for session management and providing various authentication strategies.
+- [**Shadcn**](https://ui.shadcn.com/docs): Provides ready to use UI components saves time and resources.
 - [**ChatGPT API**](#ai-integration) : Random feedback suggestions.
+
 
 ## Theory
 ### <ins>Model and Schema Handling</ins>
@@ -121,6 +129,39 @@ The email verification process is handled with the following steps:
    - OpenAI paid API keys simplify AI integrations, but we're using [OpenRouter](https://openrouter.ai/docs/quick-start) to avoid costs useful document [Implementing a Free LLM AI Using OpenRouter.ai: A Step-by-Step Guide](https://medium.com/@mahesh.paul.j/implementing-a-free-llm-ai-using-openrouter-ai-a-step-by-step-guide-8990d3e5cf77) .
    - Some useful methods like `OpenAIStream` and `StreamingTextResponse` are deprecated, making it harder to handle streaming responses.
    - Added a solution using the `fetch` command to handle streaming responses in `suggest-chatGPT > route.ts`. Testing will determine which approach works best.  
+
+### <ins>UI using Shadcn</ins>
+
+### Sign-up
+
+1. **Shadcn**
+   - **Using inbuilt UI Components.**
+      - **Form**
+         - Form with destructured data and a form added below it which handles `onSubmit`.
+         - **FormField**
+            - `control` – Transfers control to our form.
+            - `name` – Tag for the field.
+            - `render` – Collects a callback named `field` which transports the data to the backend and manages it.
+      - **Toast**
+         - Add in layout directly below the children.
+
+2. **Form**
+   - **React-Hook-Form** – Manages and centralizes controls for different form fields effectively.
+      - **form/register**
+         - `useForm()` defines:
+            - `Resolver` – Takes our pre-made schemas (Zod/Yup) as input parameter.
+            - `defaultValues` – Specifies form parameters to be managed.
+      - **SubmitHandler**
+         - Needs an `onSubmit` method as the input parameter. `onSubmit` when run, always gets `data` as a parameter, which stores our form data. This can be passed directly to a POST request if necessary.
+         - The `onSubmit` method holds the primary logic for handling form submissions.
+
+3. **Debouncing Technique**
+   - The debouncing technique checks the typed username after intervals from the backend to see if it is unique.
+   - **usehooks-ts** Handles Debouncing
+     - `useDebounceCallbacks` – Changes state of username via this hook. It requires the setMethod of state and executes it after the specified interval.
+   - **useEffect**
+     - `useEffect` hook takes a callback and a dependency array. Here, the dependency element is the `username`, and the callback holds all the logic of the implementation.
+   - For just the `username` FormField, we add a custom `onChange` method under `<Input />` and also add `field.onChange(e)` to enable the default functionality of react-hook-form which actually eliminates the need for this manual processing.
 
 ## Installation
 
