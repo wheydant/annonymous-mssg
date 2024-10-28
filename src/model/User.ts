@@ -3,6 +3,7 @@ import mongoose, {Schema, Document} from "mongoose";
 
 export interface Message extends Document{
     //Typescript String is written in small caps
+    // _id: string,
     content: string;
     createdAt: Date
 }

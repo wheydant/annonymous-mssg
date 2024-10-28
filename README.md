@@ -17,6 +17,9 @@ Anonymous Feedback is a platform that allows users to provide honest, anonymous 
          <summary><a href="#ui-using-shadcn">UI</a></summary>
 
          - [Sign Up](#sign-up)
+         - [Navigation Bar](#navbar)
+         - [Sign In](#sign-in-using-next-auth)
+         - [Dashboard](#dashboard)
 
       </details>
 - [Installation](#installation)<!-- - [Usage](#usage) -->
@@ -76,7 +79,7 @@ The email verification process is handled with the following steps:
    - Resend connection (2)
    - API response structure (3)
 
-5. **API Route**: Implemented the `/sign-up` API endpoint (`src/app/api/sign-up/route.ts`) that uses the helper file to handle user sign-up and email verification.
+5. **API Route**: Implemented the `/sign-up` API endpoint (`src/app/api/sign-up/route.ts`) that uses the helper file to handle user sign-up and email verification. Following route name in auth > [username] > page.tsx. Then we can directly use param = useParams()and then params.username directly.
 
 ### <ins>Create Sign-In Page using NextAuth</ins>
 
@@ -114,13 +117,15 @@ The email verification process is handled with the following steps:
      , *Accept-Messages*
      , *Get-Messages*
      , *Send-Messages*
-     , *Suggest-Messages*]
+     , *Suggest-Messages*
+     , *Delete-Messages*]
 
 2. **Key Learnings:**
    - **Get-Messages > route.ts:**
      - Used session data with extra values for more efficient handling.
      - Mongoose aggregation pipeline requires casting `user_id` to `mongoose.Types.ObjectId()` when working with session-stored user IDs.
      - Referenced Mongoose aggregation pipeline documentation.
+     - Delete message can be tricky because we have an array of message to tackle this, we use [pull](https://www.mongodb.com/docs/manual/reference/operator/update/pull/). A mongoDB command to remove all the instances of the value specified. As we are sending message-id to the api call thus delete-message [messageid] > route.ts, fetch the messageId using params.messageid
    
 ### <ins>AI Integration</ins>
 **Suggest-Messages > route.ts:**
@@ -134,19 +139,21 @@ The email verification process is handled with the following steps:
 
 ### Sign-up
 
-1. **Shadcn**
+1. [**Shadcn**](https://ui.shadcn.com/)
    - **Using inbuilt UI Components.**
-      - **Form**
+      - [**Form**](https://ui.shadcn.com/docs/components/form)
          - Form with destructured data and a form added below it which handles `onSubmit`.
          - **FormField**
             - `control` – Transfers control to our form.
             - `name` – Tag for the field.
             - `render` – Collects a callback named `field` which transports the data to the backend and manages it.
-      - **Toast**
+      - [**Toast**](https://ui.shadcn.com/docs/components/toast)
          - Add in layout directly below the children.
+      - [**iv.	Alert-Dialogue**](https://ui.shadcn.com/docs/components/alert-dialog)
+         - 1.	Use code from example shown and not the recommended code.
 
 2. **Form**
-   - **React-Hook-Form** – Manages and centralizes controls for different form fields effectively.
+   - [**React-Hook-Form**](https://www.react-hook-form.com/) – Manages and centralizes controls for different form fields effectively.
       - **form/register**
          - `useForm()` defines:
             - `Resolver` – Takes our pre-made schemas (Zod/Yup) as input parameter.
@@ -157,11 +164,24 @@ The email verification process is handled with the following steps:
 
 3. **Debouncing Technique**
    - The debouncing technique checks the typed username after intervals from the backend to see if it is unique.
-   - **usehooks-ts** Handles Debouncing
-     - `useDebounceCallbacks` – Changes state of username via this hook. It requires the setMethod of state and executes it after the specified interval.
+   - [**usehooks-ts**](https://usehooks-ts.com) Handles Debouncing
+     - [`useDebounceCallbacks`](https://usehooks-ts.com/react-hook/use-debounce-callback) – Changes state of username via this hook. It requires the setMethod of state and executes it after the specified interval.
    - **useEffect**
      - `useEffect` hook takes a callback and a dependency array. Here, the dependency element is the `username`, and the callback holds all the logic of the implementation.
    - For just the `username` FormField, we add a custom `onChange` method under `<Input />` and also add `field.onChange(e)` to enable the default functionality of react-hook-form which actually eliminates the need for this manual processing.
+
+### NavBar
+   Just to login and logout
+   - Sessions of next-auth – useSession provides only status of the session to extract session detail need to use session.user.
+   - SignOut method from next-auth automatically does the work.
+   - Add it in the layout file above the {child element}
+
+### Sign-in using Next-Auth
+   - No need to use axios directly use signIn method from next-Auth. It can auto-redirect as result.url but we are disabling it.
+
+### Dashboard
+   - It is stored under (app) so that it doesn’t show in route and we can transfer page.tsx and copy layout.tsx coz layout must be present on root folder.
+
 
 ## Installation
 
