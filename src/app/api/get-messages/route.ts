@@ -1,55 +1,50 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
-import dbConnect from "@/lib/dbConnect";
-import UserModel from "@/model/User";
-import { User } from "next-auth";
-import mongoose from "mongoose";
+import dbConnect from '@/lib/dbConnect';
+import UserModel from '@/model/User';
+import mongoose from 'mongoose';
+import { User } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../auth/[...nextauth]/options';
 
-export async function GET() {
-    await dbConnect()
+export async function GET(request: Request) {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+  const _user: User = session?.user;
 
-    //getServerSession needs auth Options to fetch session
-    const session = await getServerSession(authOptions)
+  if (!session || !_user) {
+    return Response.json(
+      { success: false, message: 'Not authenticated' },
+      { status: 401 }
+    );
+  }
+  const userId = new mongoose.Types.ObjectId(_user._id);
+//   const userId = new mongoose.Types.ObjectId("6719d42c4b94163d3cdca15a");
+  try {
+    const user = await UserModel.aggregate([
+      { $match: { _id: userId } },
+      { $unwind: '$messages' },
+      { $sort: { 'messages.createdAt': -1 } },
+      { $group: { _id: '$_id', messages: { $push: '$messages' } } },
+    ]).exec();
 
-    //User from next-auth is only used to specify the type of user for Typescript
-    const user: User = session?.user as User
-
-    if(!session || !session.user){
-        return Response.json({
-            success:false,
-            message: 'Not Authenticated'
-        }, {status:401})
+    // console.log(user)
+    if (!user || user.length === 0) {
+      return Response.json(
+        { message: 'User not found', success: false },
+        { status: 404 }
+      );
     }
 
-    //In options we are actually returning user._id as String for finding byId or findOne it works but here it strictly needs to be like this
-    const userId = new mongoose.Types.ObjectId(user._id);
-    try {
-        //Aggregation pipeline important
-        const user = await UserModel.aggregate([
-            { $match: {id:userId} },
-            { $unwind: '$messages'},
-            { $sort : {'messages.createdAt': -1}},
-            { $group: {_id: '$_id', messages: {$push: '$messages'}}}
-        ])
-
-        if(!user || user.length === 0){
-            return Response.json({
-                success:false,
-                message: 'User not found'
-            }, {status:404})
-        }
-
-        return Response.json({
-            success:true,
-            message: 'User found',
-            messages: user[0].messages
-        }, {status:200})
-    } catch (error) {
-        console.log("Failed to fetch messages ", error)
-        return Response.json({
-            success:false,
-            message: 'Failed to fetch messages',
-            // messages: user[0].messages
-        }, {status:400})
-    }
+    return Response.json(
+      { messages: user[0].messages },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.error('An unexpected error occurred:', error);
+    return Response.json(
+      { message: 'Internal server error', success: false },
+      { status: 500 }
+    );
+  }
 }
