@@ -149,8 +149,11 @@ The email verification process is handled with the following steps:
             - `render` – Collects a callback named `field` which transports the data to the backend and manages it.
       - [**Toast**](https://ui.shadcn.com/docs/components/toast)
          - Add in layout directly below the children.
-      - [**iv.	Alert-Dialogue**](https://ui.shadcn.com/docs/components/alert-dialog)
-         - 1.	Use code from example shown and not the recommended code.
+      - [**Alert-Dialogue**](https://ui.shadcn.com/docs/components/alert-dialog)
+         - Use code from example shown and not the recommended code.
+
+      - [**Carousel**](https://ui.shadcn.com/docs/components/carousel)
+         - Autoplay using [embla-carousel](https://www.embla-carousel.com/). Need to download both embla-carousel-react and embla-carousel-autoplay.
 
 2. **Form**
    - [**React-Hook-Form**](https://www.react-hook-form.com/) – Manages and centralizes controls for different form fields effectively.
@@ -181,6 +184,13 @@ The email verification process is handled with the following steps:
 
 ### Dashboard
    - It is stored under (app) so that it doesn’t show in route and we can transfer page.tsx and copy layout.tsx coz layout must be present on root folder.
+   - Switch is also kind of form it can be handled using state also but for code consistency as we are using react-state-form thus we need to use the same for switch.
+   - Optimistic UI – Changes are reflected on UI instantly even though Backend has not changed. E.g., Insta likes.
+   - form from useForm it has various tools like watch, register, setValue, this will enable switch functionality.
+   - useCallBack stores function between the re-renders in cache.
+   - URL fetching window.location.protocol//window.location.host can be better alternates to get baseURL
+   - Copy to clipboard use navigator.clipboard.writeText()
+
 
 
 ## Installation
