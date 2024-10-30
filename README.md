@@ -2,6 +2,17 @@
 
 Anonymous Feedback is a platform that allows users to provide honest, anonymous feedback without fear of judgment. This project is aimed at creating a safe environment where individuals can express their thoughts and suggestions freely.
 
+## Website Preview
+
+![Homepage](src/images/Homepage.png)
+*Homepage showing the application interface.*
+
+![Sign-in](src/images/Sign-in.png)
+*Sign-in page for user authentication.*
+
+![Dashboard](src/images/Dashboard.png)
+*Dashboard view of the application.*
+
 ## Table of Contents
 
 - [Project Overview](#project-overview)
