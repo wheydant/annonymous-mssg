@@ -4,14 +4,17 @@ Anonymous Feedback is a platform that allows users to provide honest, anonymous 
 
 ## Website Preview
 
-![Homepage](src/images/Homepage.png)
+![Homepage](src/images/LandingPage.png)
 *Homepage showing the application interface.*
 
-![Sign-in](src/images/Sign-in.png)
+![Feedback Page](src/images/FeedBackPage.png)
+*Feedback Form with AI Generated Model Feedbacks.*
+
+![Sign-in](src/images/Sign-inPage.png)
 *Sign-in page for user authentication.*
 
-![Dashboard](src/images/Dashboard.png)
-*Dashboard view of the application.*
+![Dashboard](src/images/DashboardPage.png)
+*Dashboard view of the application with all the feedbacks.*
 
 ## Table of Contents
 
