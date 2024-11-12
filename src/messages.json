@@ -1,18 +1,27 @@
 [
     {
-        "title": "Feedback from one",
-        "content": "Great Work",
-        "received": "2 minutes ago"
+        "title": "Feedback for One",
+        "content": "Impressive work on the recent project! Your attention to detail really stood out, and I appreciate how you communicated complex ideas so clearly. Keep it up!",
+        "received": "5 minutes ago"
     },
     {
-        "title": "Feedback from two",
-        "content": "Excelent",
-        "received": "10 minutes ago"
+        "title": "Feedback for Admin",
+        "content": "Your presentation was engaging and well-structured. Adding a few more examples could make it even stronger, but overall, you did an excellent job!",
+        "received": "30 minutes ago"
     },
     {
-        "title": "Feedback from three",
-        "content": "Big Fan",
+        "title": "Feedback for One",
+        "content": "I noticed your code is very readable and well-organized. One suggestion would be to add more comments on key sections for future collaboration. Fantastic work!",
+        "received": "1 hour ago"
+    },
+    {
+        "title": "Feedback for Hero",
+        "content": "You did a great job supporting the team during the recent project. I especially appreciated your positive attitude and willingness to help with challenging tasks.",
+        "received": "3 hours ago"
+    },
+    {
+        "title": "Feedback on time management",
+        "content": "Your ability to manage multiple tasks efficiently has been impressive. Perhaps consider sharing some tips with the team—it could really help everyone!",
         "received": "1 day ago"
     }
-
 ]

@@ -19,7 +19,7 @@ export const runtime = "edge";
 export async function POST(): Promise<Response> {
 //   const { prompt } = await req.json();
 
-    const prompt = "Create a list of three open-ended and engaging questions formatted as a single string. Each question should be seperated by '||'. These questions are for an annonymous feedback platform, like Qooh.me, and should be suitable for adiverse audience. Avoid personal or sensitive topics, focusing instead on universal themes that encourages friendly interaction. For emaple, your output should be structured like this: 'Your latest video was amazing! || I totally agree with your last blog post. || It would be great if you could cover social economic topics in your posts.'"
+    const prompt = "Create a list of three positive, engaging feedbacks formatted as a single string. Each feedback should be separated by '||'. These comments are for an anonymous feedback platform like Qooh.me, intended for a diverse audience. Ensure the feedbacks are kind, uplifting, and relevant for creators or users in general, avoiding personal or sensitive topics. Example output: 'Your recent posts are always so thought-provoking! || I really enjoy the way you explain complex ideas in your videos. || Your content has inspired me to try out new hobbies, thank you for sharing!'"
     try {
         const response = await openai.chat.completions.create({
         model: "openai/gpt-3.5-turbo",

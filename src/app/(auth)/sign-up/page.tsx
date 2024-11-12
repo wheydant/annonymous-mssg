@@ -172,6 +172,10 @@ const Page = () => {
             <Link href="/sign-in" className='text-blue-600 hover:text-blue-800'>
               Sign In
             </Link>
+            {' '}or Back to{' '}
+            <Link href="/" className='text-blue-600 hover:text-blue-800'>
+              Homepage
+            </Link>
           </p>
         </div>
       </div>
